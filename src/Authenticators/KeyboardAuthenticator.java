@@ -6,7 +6,7 @@ public class KeyboardAuthenticator implements Authenticator {
     @Override
     public double getScore() {
         Random random = new Random();
-        return random.nextGaussian()*1+90;
+        return random.nextGaussian()*1+85;
     }
 
     @Override

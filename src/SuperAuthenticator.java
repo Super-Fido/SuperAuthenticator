@@ -5,6 +5,8 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SuperAuthenticator {
     private ArrayList<AuthenticatorData> auths;
@@ -45,7 +47,7 @@ public class SuperAuthenticator {
         return  totalScore >= 80;
     }
 
-    void update(){
+    void update(double variation){
         AuthenticatorData faultyAuthenticator = auths.get(0);
         for (AuthenticatorData auth : auths) {
             if(getScore(auth) < getScore(faultyAuthenticator)){
@@ -53,18 +55,21 @@ public class SuperAuthenticator {
             }
         }
 
-        double weightToRemove = 0.1;
-        double weightToAdd = weightToRemove/(auths.size()-1);
+        auths.sort((obj1, obj2) -> {
+            // Compare based on the size property
+            return (int) (getScore(obj1) - getScore(obj2));
+        });
+
+        int size = auths.size();
+        double spread = (variation*2)/(size-1);
+        double[] weighDistribution = new double[size];
+        for (int i=0; i<size; i++){
+            weighDistribution[i] = -variation + spread*i;
+        }
 
 
-        for (AuthenticatorData auth : auths) {
-            if(auth.equals(faultyAuthenticator)){
-                auth.setWeight(auth.getWeight() -  weightToRemove);
-            }
-            else{
-                auth.setWeight(auth.getWeight() + weightToAdd);
-            }
-
+        for (int i=0; i<size; i++) {
+            auths.get(i).setWeight(auths.get(i).getWeight() + weighDistribution[i]);
         }
     };
 
@@ -72,7 +77,7 @@ public class SuperAuthenticator {
     private double getScore(AuthenticatorData data) {
         ArrayList<Double> scores = data.getScores();
         int size = scores.size();
-        if(size < 10){
+        if(size < this.weightsForScores.length){
             return 100;
         }
 
@@ -82,6 +87,7 @@ public class SuperAuthenticator {
         }
         return score;
     }
+
 
 
     // CTAP2
