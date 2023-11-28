@@ -13,4 +13,8 @@ public class KeyboardAuthenticator implements Authenticator {
     public void run() {
 
     }
+    @Override
+    public String toString() {
+        return "Keyboard Authenticator";
+    }
 }

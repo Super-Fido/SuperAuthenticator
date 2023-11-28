@@ -1,5 +1,9 @@
 import Authenticators.Authenticator;
 
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class SuperAuthenticator {
@@ -32,9 +36,12 @@ public class SuperAuthenticator {
         for (AuthenticatorData auth : auths) {
             double score = auth.getAuthenticator().getScore();
             auth.getScores().add(score);
-            totalScore += getScore(auth) * auth.getWeight();
+            double authScore = getScore(auth);
+            System.out.println(auth.getAuthenticator().toString() + " score: " + authScore + ", weigh: "+ auth.getWeight());
+            totalScore += authScore * auth.getWeight();
         }
         System.out.println("Total Score: " + totalScore);
+        System.out.println();
         return  totalScore >= 80;
     }
 
@@ -74,5 +81,19 @@ public class SuperAuthenticator {
             score += scores.get(size - i - 1) * weightsForScores[i];
         }
         return score;
+    }
+
+
+    // CTAP2
+
+    public void authenticatorMakeCredential() throws NoSuchAlgorithmException {
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+        kpg.initialize(2048);
+        KeyPair kp = kpg.generateKeyPair();
+
+        Key pub = kp.getPublic();
+        Key pvt = kp.getPrivate();
+        System.out.println(pub);
+        System.out.println(pvt);
     }
 }

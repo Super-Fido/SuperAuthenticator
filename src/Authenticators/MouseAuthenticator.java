@@ -13,4 +13,8 @@ public class MouseAuthenticator implements Authenticator {
     public void run() {
 
     }
+    @Override
+    public String toString() {
+        return "Mouse Authenticator";
+    }
 }

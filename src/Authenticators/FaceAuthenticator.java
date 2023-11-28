@@ -13,4 +13,8 @@ public class FaceAuthenticator implements Authenticator {
     public void run() {
 
     }
+    @Override
+    public String toString() {
+        return "Face Authenticator";
+    }
 }

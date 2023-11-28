@@ -3,19 +3,20 @@ import Authenticators.FaceAuthenticator;
 import Authenticators.KeyboardAuthenticator;
 import Authenticators.MouseAuthenticator;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
         final String PASSWORD = "admin";
         Scanner myObj = new Scanner(System.in);
 
-//        double[] slidingWindowWeights = {0.2, 0.15, 0.1, 0.09, 0.09, 0.08, 0.08, 0.08, 0.07, 0.06};
+        double[] slidingWindowWeights = {0.2, 0.15, 0.1, 0.09, 0.09, 0.08, 0.08, 0.08, 0.07, 0.06};
 //        double[] slidingWindowWeights = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 //        double[] slidingWindowWeights = {0.2, 0.2, 0.2, 0.2, 0.2, 0, 0, 0, 0, 0};
 //        double[] slidingWindowWeights = {0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0};
-        double[] slidingWindowWeights = {1.0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//        double[] slidingWindowWeights = {1.0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         KeyboardAuthenticator keyAuth = new KeyboardAuthenticator();
         MouseAuthenticator mouseAuth = new MouseAuthenticator();
@@ -27,6 +28,7 @@ public class Main {
         authenticators.add(faceAuth);
 
         SuperAuthenticator authenticator = new SuperAuthenticator(authenticators, slidingWindowWeights);
+//        authenticator.authenticatorMakeCredential();
 
         while (true) {
             if(!authenticator.authenticate()) {
