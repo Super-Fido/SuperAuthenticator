@@ -39,7 +39,7 @@ public class SuperAuthenticator {
             double score = auth.getAuthenticator().getScore();
             auth.getScores().add(score);
             double authScore = getScore(auth);
-            System.out.println(auth.getAuthenticator().toString() + " score: " + authScore + ", weigh: "+ auth.getWeight());
+            System.out.println(auth.getAuthenticator().toString() + " score: " + authScore + ", weight: "+ auth.getWeight());
             totalScore += authScore * auth.getWeight();
         }
         System.out.println("Total Score: " + totalScore);

@@ -7,5 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="fasterxml.jackson.dataformat.cbor" level="project" />
+    <orderEntry type="library" name="bouncycastle.bcpkix.jdk18on" level="project" />
+    <orderEntry type="library" name="slf4j.simple" level="project" />
+    <orderEntry type="library" name="github.martinpaljak.apdu4j.core" level="project" />
   </component>
 </module>
